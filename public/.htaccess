@@ -1,0 +1,4 @@
+RewriteEngine on
+RewriteRule ^vendor - [R=404]
+RewriteRule ^cron - [R=404]
+RewriteRule ^down /index.php [R=302]

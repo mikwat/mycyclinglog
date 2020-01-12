@@ -1,0 +1,3 @@
+RewriteEngine on
+RewriteCond %{HTTP:Authorization}  !^$
+RewriteRule ^restserver.php$ restserver.php?login=%{HTTP:Authorization}

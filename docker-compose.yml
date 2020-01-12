@@ -1,0 +1,26 @@
+version: '2.2'
+services:
+  web:
+    build:
+      context: .
+      args:
+        - BUILD_ENV=dev
+    environment:
+      - MCL_DOMAIN=localhost
+    volumes:
+      - ./public:/var/www/html
+    ports:
+      - "80:80"
+  db:
+    image: "mysql:5"
+    # restart: always
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=yes
+      - MYSQL_DATABASE=***
+      - MYSQL_USER=***
+      - MYSQL_PASSWORD=***
+    volumes:
+      - ./db/datadir:/var/lib/mysql
+      - ./db/init:/docker-entrypoint-initdb.d
+    ports:
+      - "3306:3306"

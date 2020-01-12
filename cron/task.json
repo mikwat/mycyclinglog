@@ -1,0 +1,17 @@
+{
+  "containerOverrides": [
+    {
+      "name": "cron",
+      "command": ["php", "./cron/backup.php"],
+      "environment": [
+        { "name": "DB_HOST", "value": "***.local" },
+        { "name": "BACKUP_NAME", "value": "***-test" },
+        { "name": "BACKUP_TYPE", "value": "db" },
+        { "name": "BACKUP_BUCKET", "value": "***" },
+        { "name": "BACKUP_DB_NAME", "value": "***" },
+        { "name": "BACKUP_DB_USER", "value": "***" },
+        { "name": "BACKUP_DB_PASS", "value": "***" }
+      ]
+    }
+  ]
+}

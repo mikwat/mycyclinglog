@@ -1,0 +1,33 @@
+FROM php:7.2-cli
+
+RUN apt-get update && apt-get install -y \
+  git \
+  libpng-dev \
+  libz-dev \
+  mysql-client \
+  unzip \
+  zip
+RUN apt-get clean
+
+RUN docker-php-ext-install mysqli gd gettext zip
+
+# Install Composer
+WORKDIR /tmp
+RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+RUN php -r "if (hash_file('SHA384', 'composer-setup.php') === '93b54496392c062774670ac18b134c3b3a95e5a5e5c8f1a9f115f203b75bf9a129d5daa8ba6a13e2cc8a1da0806388a8') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+RUN php composer-setup.php --install-dir=/usr/local/bin/
+RUN php -r "unlink('composer-setup.php');"
+
+# Working dir
+RUN mkdir -p /usr/src/myapp
+WORKDIR /usr/src/myapp
+
+# Composer install
+COPY composer.json /usr/src/myapp
+COPY composer.lock /usr/src/myapp
+RUN php /usr/local/bin/composer.phar install -n
+
+# Pear installs
+RUN pear install Cache_Lite
+
+COPY . /usr/src/myapp
