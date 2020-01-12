@@ -1,1 +1,6 @@
 .DS_Store
+db/
+public/cache/
+public/images/tmp/*.png
+public/vendor/
+vendor/
